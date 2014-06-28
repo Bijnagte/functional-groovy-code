@@ -5,3 +5,5 @@ sizeOfList = { list, counter = 0 ->
 		sizeOfList.trampoline(list.tail(), counter + 1)
 	}
 }.trampoline()
+
+sizeOfList(1..10000)

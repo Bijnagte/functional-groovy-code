@@ -5,3 +5,5 @@ sizeOfList = { list, counter = 0 ->
 		sizeOfList(list.tail(), counter + 1)
 	}
 }
+
+sizeOfList(1..100)
