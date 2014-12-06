@@ -2,6 +2,8 @@ import org.codehaus.groovy.runtime.DefaultGroovyMethods
 
 input = ['hello', 'there', 'people']
 
+people = ['Jane', 'Dave', 'Wendy']
+
 //closures as referentially transparent functions
 nth = { sequence, index -> sequence[index] }
 assert nth(input, 2) == 'people'
@@ -20,7 +22,14 @@ assert find(input) { it.endsWith('o') } == 'hello'
 startsWith = { value, sequence -> sequence[0] == value }
 assert find(input) { startsWith 'p', it } == 'people'
 
+
 //currying (partial application)
+nthPerson = nth.curry(people)
+assert nthPerson(2) == 'Wendy'
+
+second = nth.rcurry(1)
+assert second(people) == 'Dave'
+
 nthInput = nth.curry(input)
 assert nthInput(2) == 'people'
 
@@ -33,6 +42,7 @@ assert find (input, startsWithP) == 'people'
 findStartsWithP = find.rcurry(startsWithP)
 assert findStartsWithP(input) == 'people'
 
+
 //closure composition
 thirdReverse = third >> reverse
 assert thirdReverse(input) == 'elpoep'
@@ -41,5 +51,5 @@ reverseThird = third << reverse
 assert reverseThird(input) == 'hello'
 
 //compose closures into a pipeline
-process = third >> reverse >> { nth it, 1 } >> capitalize
-assert process(input) == 'L'
+process = third >> reverse >> capitalize
+assert process(input) == 'ELPOEP'

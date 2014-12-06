@@ -1,6 +1,6 @@
 import groovy.transform.Immutable
 
-@Immutable
+@Immutable(copyWith = true)
 class ImmutableType {
 	int integer
 	String string
